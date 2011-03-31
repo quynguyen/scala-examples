@@ -15,7 +15,7 @@ object Tuples extends Application {
 }
 
 /**
- * Syntatic sugar for tuples
+ * Syntactic sugar for tuples
  */
 object TuplesSyntaticSugar extends Application
 {
