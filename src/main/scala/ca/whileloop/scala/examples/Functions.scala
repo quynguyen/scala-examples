@@ -22,7 +22,7 @@ trait MathTrait
  * Define three functions that do an operation over a sequence
  * of numbers, from a to b, inclusive.
  */
-object Funcs extends Application with MathTrait
+object Funcs extends App with MathTrait
 {
   def sumInts( a: Int, b: Int ): Int = {
     if ( a > b ) 0 else identity(a) + sumInts( a + 1, b );
@@ -44,7 +44,7 @@ object Funcs extends Application with MathTrait
 /*
  * Demonstrates First-Class functions, i.e. passing functions as a parameters.
  */
-object FactorOutSum extends Application with MathTrait
+object FactorOutSum extends App with MathTrait
 {
   /**
    * A reusable sum method, that takes a function "f", as a parameter,
@@ -69,7 +69,7 @@ object FactorOutSum extends Application with MathTrait
 /**
  * Demonstrate usage of anonymous functions
  */
-object AnonymousFuncs extends Application with MathTrait
+object AnonymousFuncs extends App with MathTrait
 {
   def sum( f: (Int) => Int, a: Int, b: Int ): Int = {
     if ( a > b ) 0 else f( a ) + sum( f, a + 1, b );
@@ -90,7 +90,7 @@ object AnonymousFuncs extends Application with MathTrait
 /**
  * Demonstrates currying, i.e, returning a function
  */
-object CurryingFunc extends Application with MathTrait
+object CurryingFunc extends App with MathTrait
 {
   /**
    * Return a function that does the summing
@@ -118,7 +118,7 @@ object CurryingFunc extends Application with MathTrait
 /**
  * Demonstrates the special syntax for a currying function
  */
-object SimplifiedCurryingFunc extends Application with MathTrait
+object SimplifiedCurryingFunc extends App with MathTrait
 {
   /**
    * Turned sum into a currying function.  Note the
@@ -159,7 +159,7 @@ object TailRescursiveSum extends Application
   println( "Sum from 1 to 5: " + sumInts(1, 5) );  
 }
 
-object Product extends Application
+object Product extends App
 {
   /**
    * Exactly the same as sum, but instead of "*", instead of "+" 
@@ -178,7 +178,7 @@ object Product extends Application
   println( "The factorial of 3 is: " + factorial( 3 ) );
 }
 
-object Operate extends Application with MathTrait
+object Operate extends App with MathTrait
 {
   def operate( operator: (Int, Int) => Int, identityValue: Int )( f: Int => Int )( a: Int, b: Int ): Int = {
 	def iter( current: Int, runningResult: Int ): Int = {
