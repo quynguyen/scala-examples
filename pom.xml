@@ -4,7 +4,7 @@
     <groupId>ca.whileloop</groupId>
     <artifactId>scala-examples</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>${project.artifactId}</name>
+    <name>Scala Examples</name>
     <description>Minimal examples demonstrating Scala syntax and idoms</description>
     <parent>
         <groupId>ca.whileloop</groupId>
