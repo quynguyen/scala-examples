@@ -122,8 +122,11 @@ object MapFunctionsUsingFold extends Application
     }
   }
   
-  var list = List(1,2,3)
+  val list = List(1,2,3)
+  val sum = ( 0 /: list){_ + _}
+  
   println( "List: " + list )
+  println( "Sum:  " + sum )
   println( "Length: " + lengthFun( list ) )
   println( "Square each element: " + mapFun[Int,Int]( list, x => x*x  ))
 }
