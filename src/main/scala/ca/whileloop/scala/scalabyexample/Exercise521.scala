@@ -81,10 +81,10 @@ object Exercise521 extends App {
     }
 
     iter(initialGuess)
-  } 
+  }
 
   def sqrt(x: Double) = fixedPoint(y => (y + x / y) / 2)(1.0)
-  sqrt(4) 
+  sqrt(4)
 
   def averageDamp(f: Double => Double)(x: Double) = (x + f(x)) / 2
 
