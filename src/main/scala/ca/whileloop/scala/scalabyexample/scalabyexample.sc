@@ -21,63 +21,59 @@ object scalabyexample {
     }
     iter(a, 1)
   }                                               //> product: (f: Int => Double)(a: Int, b: Int)Double
-  
+
   product(x => x)(1, 4)                           //> res1: Double = 24.0
-  
+
   def factorial(n: Int): Double = {
-  	product(x => x)(1, n)
+    product(x => x)(1, n)
   }                                               //> factorial: (n: Int)Double
-  
+
   factorial(3)                                    //> res2: Double = 6.0
-  
-  abstract class Operator
-  {
-  	def identity: Double
-  	def apply(a: Double, b: Double): Double
+
+  abstract class Operator {
+    def identity: Double
+    def apply(a: Double, b: Double): Double
   }
-  case object Add extends Operator
-  {
-  	def identity: Double = 0
-  	def apply(a: Double, b: Double): Double = a + b
+  case object Add extends Operator {
+    def identity: Double = 0
+    def apply(a: Double, b: Double): Double = a + b
   }
-  case object Multiply extends Operator
-  {
-  	def identity: Double = 1
-  	def apply(a: Double, b: Double): Double = a * b
+  case object Multiply extends Operator {
+    def identity: Double = 1
+    def apply(a: Double, b: Double): Double = a * b
   }
-  
+
   object OperateOnRange {
-  	def apply(operator: Operator)(a: Int, b: Int): Double = {
-  		def iter(a: Int, acc: Double): Double = {
-  			if (a > b)
-  				acc
-  			else
-  				iter(a + 1, operator(acc, a))
-  		}
-  		iter(a, operator.identity)
-  	}
+    def apply(operator: Operator)(a: Int, b: Int): Double = {
+      def iter(a: Int, acc: Double): Double = {
+        if (a > b)
+          acc
+        else
+          iter(a + 1, operator(acc, a))
+      }
+      iter(a, operator.identity)
+    }
   }
-  
-  OperateOnRange(Add)(1,2)                        //> res3: Double = 3.0
-  
-  
+
+  OperateOnRange(Add)(1, 2)                       //> res3: Double = 3.0
+
   def fixedPoint(f: Double => Double)(initialGuess: Double): Double = {
-  	def iter(guess: Double): Double = {
-  		def isCloseEnough(next: Double): Boolean = {
-  			Math.abs((next - guess)/guess) < 0.0001
-  		}
-  		val next = f(guess);
-  		println(next)
-  		if (isCloseEnough(next))
-  			next
-  		else
-  			iter(next)
-  	}
-  	
-  	iter(initialGuess)
+    def iter(guess: Double): Double = {
+      def isCloseEnough(next: Double): Boolean = {
+        Math.abs((next - guess) / guess) < 0.0001
+      }
+      val next = f(guess);
+      println(next)
+      if (isCloseEnough(next))
+        next
+      else
+        iter(next)
+    }
+
+    iter(initialGuess)
   }                                               //> fixedPoint: (f: Double => Double)(initialGuess: Double)Double
-  
-  def sqrt(x: Double) = fixedPoint(y => (y + x/y) / 2)(1.0)
+
+  def sqrt(x: Double) = fixedPoint(y => (y + x / y) / 2)(1.0)
                                                   //> sqrt: (x: Double)Double
   sqrt(4)                                         //> 2.5
                                                   //| 2.05
@@ -85,20 +81,17 @@ object scalabyexample {
                                                   //| 2.0000000929222947
                                                   //| 2.000000000000002
                                                   //| res4: Double = 2.000000000000002
-  
-  
-  
-	def averageDamp(f: Double => Double)(x: Double) = (x + f(x))/2
+
+  def averageDamp(f: Double => Double)(x: Double) = (x + f(x)) / 2
                                                   //> averageDamp: (f: Double => Double)(x: Double)Double
-	
-	def sqrt2(x: Double) = fixedPoint(averageDamp(y => x / y))(1.0)
+
+  def sqrt2(x: Double) = fixedPoint(averageDamp(y => x / y))(1.0)
                                                   //> sqrt2: (x: Double)Double
-	
-	
-	def cbrt(x: Double) = fixedPoint(averageDamp(y => x / (y * y)))(1.0)
+
+  def cbrt(x: Double) = fixedPoint(averageDamp(y => x / (y * y)))(1.0)
                                                   //> cbrt: (x: Double)Double
-	
-	cbrt(16)                                  //> 8.5
+
+  cbrt(16)                                        //> 8.5
                                                   //| 4.360726643598616
                                                   //| 2.6010630779468844
                                                   //| 2.4829963306881875
@@ -112,25 +105,40 @@ object scalabyexample {
                                                   //| 2.5196940687432705
                                                   //| 2.519916128358389
                                                   //| res5: Double = 2.519916128358389
-	
-	trait IntSet {
-		def incl(x: Int): IntSet
-		def contains(x: Int): Boolean
-	}
-	
-	class EmptySet extends IntSet {
-def contains(x: Int): Boolean = false
-def incl(x: Int): IntSet = new NonEmptySet(x, new EmptySet, new EmptySet)
-}
 
-class NonEmptySet(elem: Int, left: IntSet, right: IntSet) extends IntSet {
-def contains(x: Int): Boolean =
-if (x < elem) left contains x
-else if (x > elem) right contains x
-else true
-def incl(x: Int): IntSet =
-if (x < elem) new NonEmptySet(elem, left incl x, right)
-else if (x > elem) new NonEmptySet(elem, left, right incl x)
-else this
-}  
+  trait IntSet {
+    def incl(x: Int): IntSet
+    def contains(x: Int): Boolean
+  }
+
+  class EmptySet extends IntSet {
+    def contains(x: Int): Boolean = false
+    def incl(x: Int): IntSet = new NonEmptySet(x, new EmptySet, new EmptySet)
+  }
+
+  class NonEmptySet(elem: Int, left: IntSet, right: IntSet) extends IntSet {
+    def contains(x: Int): Boolean =
+      if (x < elem) left contains x
+      else if (x > elem) right contains x
+      else true
+    def incl(x: Int): IntSet =
+      if (x < elem) new NonEmptySet(elem, left incl x, right)
+      else if (x > elem) new NonEmptySet(elem, left, right incl x)
+      else this
+  }
+
+  class Rational(val x: Int, val y: Int) {
+    def add(that: Rational) = new Rational(this.x * that.y + that.x * this.y, this.y * that.y)
+    def negative = new Rational(-1 * this.x, this.y)
+    def +(other: Rational) = add(other)
+    def unary_- = negative
+    override def toString = x + "/" + y
+  }
+
+  new Rational(1, 2) + new Rational(1, 2)         //> res6: scalabyexample.Rational = 4/4
+  -(new Rational(1, 2))                           //> res7: scalabyexample.Rational = -1/2
+
+  for (xs <- List(List(1), List(2))) yield xs     //> res8: List[List[Int]] = List(List(1), List(2))
+                                                  //| Output exceeds cutoff limit. 
+
 }

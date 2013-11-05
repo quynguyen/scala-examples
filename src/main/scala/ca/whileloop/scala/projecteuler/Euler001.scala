@@ -13,4 +13,7 @@ object Euler001 extends App {
  
     val s = sumMultiples(1000, 3) + sumMultiples(1000,5)
     print( s )
+
+
+    val l = List(1,2,3,4)
 }
